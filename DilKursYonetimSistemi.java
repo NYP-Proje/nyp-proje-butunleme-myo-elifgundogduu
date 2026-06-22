@@ -1,4 +1,4 @@
-﻿import javafx.application.Application;
+import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -157,7 +157,7 @@ public class DilKursYonetimSistemi extends Application {
             double not = Double.parseDouble(txtNot.getText());
 
             // DB Ekleme
-            String sql = \"INSERT INTO ogrenciler(adSoyad, yas, telefon, kur, sinav_notu) VALUES(?,?,?,?,?)\";
+            String sql = "INSERT INTO ogrenciler(adSoyad, yas, telefon, kur, sinav_notu) VALUES(?,?,?,?,?)";
             try (Connection conn = connect();
                  PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, ad);
@@ -179,9 +179,9 @@ public class DilKursYonetimSistemi extends Application {
 
             txtAdSoyad.clear(); txtYas.clear(); txtTelefon.clear(); txtKur.clear(); txtNot.clear();
             tumOgrencileriListele();
-            bilgiMesaji(\"BaÅŸarÄ±lÄ±\", \"Ã–ÄŸrenci baÅŸarÄ±yla eklendi.\");
+            bilgiMesaji("BaÅŸarÄ±lÄ±", "Ã–ÄŸrenci baÅŸarÄ±yla eklendi.");
         } catch (Exception e) {
-            hataMesaji(\"GiriÅŸ HatasÄ±\", \"LÃ¼tfen tÃ¼m alanlarÄ± doÄŸru doldurun!\");
+            hataMesaji("GiriÅŸ HatasÄ±", "LÃ¼tfen tÃ¼m alanlarÄ± doÄŸru doldurun!");
         }
     }
 
@@ -204,7 +204,7 @@ public class DilKursYonetimSistemi extends Application {
             }
         }
         if (!bulundu) {
-            hataMesaji(\"Bilgi\", \"Bu kurda Ã¶ÄŸrenci bulunamadÄ±.\");
+            hataMesaji("Bilgi", "Bu kurda Ã¶ÄŸrenci bulunamadÄ±.");
         }
     }
 
@@ -220,7 +220,7 @@ public class DilKursYonetimSistemi extends Application {
             }
         }
         if (!bulundu) {
-            hataMesaji(\"Bilgi\", \"Ã–ÄŸrenci bulunamadÄ±.\");
+            hataMesaji("Bilgi", "Ã–ÄŸrenci bulunamadÄ±.");
         }
     }
 
@@ -230,7 +230,7 @@ public class DilKursYonetimSistemi extends Application {
             boolean silindi = false;
 
             // DB Silme
-            String sql = \"DELETE FROM ogrenciler WHERE id = ?\";
+            String sql = "DELETE FROM ogrenciler WHERE id = ?";
             try (Connection conn = connect();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setInt(1, id);
@@ -241,7 +241,7 @@ public class DilKursYonetimSistemi extends Application {
                         if (ogrenciler.get(i).id == id) {
                             ogrenciler.remove(i);
                             silindi = true;
-                            bilgiMesaji(\"BaÅŸarÄ±lÄ±\", \"Ã–ÄŸrenci silindi.\");
+                            bilgiMesaji("BaÅŸarÄ±lÄ±", "Ã–ÄŸrenci silindi.");
                             txtSilId.clear();
                             break;
                         }
@@ -249,11 +249,11 @@ public class DilKursYonetimSistemi extends Application {
                 }
             }
             if (!silindi) {
-                hataMesaji(\"Hata\", \"ID bulunamadÄ±.\");
+                hataMesaji("Hata", "ID bulunamadÄ±.");
             }
             tumOgrencileriListele();
         } catch (Exception e) {
-            hataMesaji(\"Hata\", \"GeÃ§erli bir ID girin.\");
+            hataMesaji("Hata", "GeÃ§erli bir ID girin.");
         }
     }
 
@@ -269,18 +269,18 @@ public class DilKursYonetimSistemi extends Application {
                         String eskiKur = o.kur;
                         String yeniKur = o.kur;
                         switch (o.kur) {
-                            case \"A1\": yeniKur = \"A2\"; break;
-                            case \"A2\": yeniKur = \"B1\"; break;
-                            case \"B1\": yeniKur = \"B2\"; break;
-                            case \"B2\": yeniKur = \"C1\"; break;
-                            case \"C1\": yeniKur = \"C2\"; break;
-                            case \"C2\":
-                                bilgiMesaji(\"Kur Durumu\", o.adSoyad + \" zaten en yÃ¼ksek kurda (C2).\");
+                            case "A1": yeniKur = "A2"; break;
+                            case "A2": yeniKur = "B1"; break;
+                            case "B1": yeniKur = "B2"; break;
+                            case "B2": yeniKur = "C1"; break;
+                            case "C1": yeniKur = "C2"; break;
+                            case "C2":
+                                bilgiMesaji("Kur Durumu", o.adSoyad + " zaten en yÃ¼ksek kurda (C2).");
                                 return;
                         }
                         
                         // DB GÃ¼ncelleme
-                        String sql = \"UPDATE ogrenciler SET kur = ? WHERE id = ?\";
+                        String sql = "UPDATE ogrenciler SET kur = ? WHERE id = ?";
                         try (Connection conn = connect();
                              PreparedStatement pstmt = conn.prepareStatement(sql)) {
                             pstmt.setString(1, yeniKur);
@@ -289,19 +289,19 @@ public class DilKursYonetimSistemi extends Application {
                         }
                         
                         o.kur = yeniKur;
-                        bilgiMesaji(\"Tebrikler\", o.adSoyad + \" kur atlamaya hak kazandÄ±!\\nEski Kuru: \" + eskiKur + \" -> Yeni Kuru: \" + o.kur);
+                        bilgiMesaji("Tebrikler", o.adSoyad + " kur atlamaya hak kazandÄ±!\nEski Kuru: " + eskiKur + " -> Yeni Kuru: " + o.kur);
                         txtKurAtlaId.clear();
                     } else {
-                        hataMesaji(\"Yetersiz Not\", \"Kur atlamak iÃ§in not en az 85 olmalÄ±.\");
+                        hataMesaji("Yetersiz Not", "Kur atlamak iÃ§in not en az 85 olmalÄ±.");
                     }
                 }
             }
             if (!bulundu) {
-                hataMesaji(\"Hata\", \"Ã–ÄŸrenci bulunamadÄ±.\");
+                hataMesaji("Hata", "Ã–ÄŸrenci bulunamadÄ±.");
             }
             tumOgrencileriListele();
         } catch (Exception e) {
-            hataMesaji(\"Hata\", \"GeÃ§erli bir ID girin.\");
+            hataMesaji("Hata", "GeÃ§erli bir ID girin.");
         }
     }
 
