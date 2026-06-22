@@ -2,3 +2,4 @@
 .idea/
 out/
 javafx-sdk-21/
+*.db
