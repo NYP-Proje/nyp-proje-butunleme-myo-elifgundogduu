@@ -82,38 +82,38 @@ public class DilKursYonetimSistemi extends Application {
         dbOlustur();
         dbYukle();
 
-        primaryStage.setTitle("Ä°ngilizce Dil Kursu YÃ¶netim Sistemi");
+        primaryStage.setTitle("İngilizce Dil Kursu Yönetim Sistemi");
 
-        // ---- SOL PANEL: Ã–ÄRENCÄ° EKLEME FORMU ----
+        //Öğrenci Ekleme//
         VBox solPanel = new VBox(10);
         solPanel.setPadding(new Insets(10));
         solPanel.setStyle("-fx-border-color: #ccc; -fx-border-width: 0 1 0 0;");
 
-        Label lblBaslik = new Label("YENÄ° Ã–ÄRENCÄ° EKLE");
+        Label lblBaslik = new Label("YENİ ÖĞRENCİ EKLE");
         lblBaslik.setStyle("-fx-font-weight: bold; -fx-font-size: 14px;");
 
         txtAdSoyad = new TextField(); txtAdSoyad.setPromptText("Ad Soyad");
-        txtYas = new TextField(); txtYas.setPromptText("YaÅŸ");
+        txtYas = new TextField(); txtYas.setPromptText("Yaş");
         txtTelefon = new TextField(); txtTelefon.setPromptText("Telefon");
         txtKur = new TextField(); txtKur.setPromptText("Kur (A1, A2, B1...)");
-        txtNot = new TextField(); txtNot.setPromptText("SÄ±nav Notu");
+        txtNot = new TextField(); txtNot.setPromptText("Sınav Notu");
 
-        Button btnEkle = new Button("Ã–ÄŸrenci Ekle");
+        Button btnEkle = new Button("Öğrenci Ekle");
         btnEkle.setMaxWidth(Double.MAX_VALUE);
         btnEkle.setOnAction(e -> ogrenciEkle());
 
         solPanel.getChildren().addAll(lblBaslik, txtAdSoyad, txtYas, txtTelefon, txtKur, txtNot, btnEkle);
 
-        // ---- SAÄ PANEL: LÄ°STELEME ----
+        //LİSTELEME//
         VBox sagPanel = new VBox(10);
         sagPanel.setPadding(new Insets(10));
 
         HBox aramaKutusu = new HBox(5);
         txtArama = new TextField();
-        txtArama.setPromptText("Ä°sim veya Kur Ara...");
-        Button btnAra = new Button("Ä°simle Ara");
-        Button btnKurAra = new Button("Kura GÃ¶re Listele");
-        Button btnHepsiniListele = new Button("TÃ¼mÃ¼nÃ¼ Listele");
+        txtArama.setPromptText("İsim veya Kur Ara...");
+        Button btnAra = new Button("İsimle Ara");
+        Button btnKurAra = new Button("Kura Göre Listele");
+        Button btnHepsiniListele = new Button("Tamamını Listele");
 
         btnAra.setOnAction(e -> ogrenciAra());
         btnKurAra.setOnAction(e -> kuraGoreListele());
@@ -124,13 +124,13 @@ public class DilKursYonetimSistemi extends Application {
 
         VBox silKutusu = new VBox(5);
         txtSilId = new TextField(); txtSilId.setPromptText("Silinecek ID");
-        Button btnSil = new Button("Ã–ÄŸrenci Sil");
+        Button btnSil = new Button("Öğrenci Sil");
         btnSil.setOnAction(e -> ogrenciSil());
         silKutusu.getChildren().addAll(txtSilId, btnSil);
 
         VBox kurAtlaKutusu = new VBox(5);
-        txtKurAtlaId = new TextField(); txtKurAtlaId.setPromptText("Ã–ÄŸrenci ID");
-        Button btnKurAtla = new Button("Kur Atlama KontrolÃ¼");
+        txtKurAtlaId = new TextField(); txtKurAtlaId.setPromptText("Öğrenci ID");
+        Button btnKurAtla = new Button("Kur Atlama Kontrolü");
         btnKurAtla.setOnAction(e -> kurAtlamaKontrol());
         kurAtlaKutusu.getChildren().addAll(txtKurAtlaId, btnKurAtla);
 
@@ -179,9 +179,9 @@ public class DilKursYonetimSistemi extends Application {
 
             txtAdSoyad.clear(); txtYas.clear(); txtTelefon.clear(); txtKur.clear(); txtNot.clear();
             tumOgrencileriListele();
-            bilgiMesaji("BaÅŸarÄ±lÄ±", "Ã–ÄŸrenci baÅŸarÄ±yla eklendi.");
+            bilgiMesaji("Başarılı", "Öğrenci başarıyla eklendi.");
         } catch (Exception e) {
-            hataMesaji("GiriÅŸ HatasÄ±", "LÃ¼tfen tÃ¼m alanlarÄ± doÄŸru doldurun!");
+            hataMesaji("Giriş Hatası", "Lütfen tüm alanları doğru doldurun!");
         }
     }
 
@@ -204,7 +204,7 @@ public class DilKursYonetimSistemi extends Application {
             }
         }
         if (!bulundu) {
-            hataMesaji("Bilgi", "Bu kurda Ã¶ÄŸrenci bulunamadÄ±.");
+            hataMesaji("Bilgi", "Bu kurda öğrenci bulunamadı.");
         }
     }
 
@@ -220,7 +220,7 @@ public class DilKursYonetimSistemi extends Application {
             }
         }
         if (!bulundu) {
-            hataMesaji("Bilgi", "Ã–ÄŸrenci bulunamadÄ±.");
+            hataMesaji("Bilgi", "Öğrenci bulunamadı.");
         }
     }
 
@@ -241,7 +241,7 @@ public class DilKursYonetimSistemi extends Application {
                         if (ogrenciler.get(i).id == id) {
                             ogrenciler.remove(i);
                             silindi = true;
-                            bilgiMesaji("BaÅŸarÄ±lÄ±", "Ã–ÄŸrenci silindi.");
+                            bilgiMesaji("Başarılı", "Öğrenci silindi.");
                             txtSilId.clear();
                             break;
                         }
@@ -249,11 +249,11 @@ public class DilKursYonetimSistemi extends Application {
                 }
             }
             if (!silindi) {
-                hataMesaji("Hata", "ID bulunamadÄ±.");
+                hataMesaji("Hata", "ID bulunamadı.");
             }
             tumOgrencileriListele();
         } catch (Exception e) {
-            hataMesaji("Hata", "GeÃ§erli bir ID girin.");
+            hataMesaji("Hata", "Geçerli bir ID girin.");
         }
     }
 
@@ -275,11 +275,11 @@ public class DilKursYonetimSistemi extends Application {
                             case "B2": yeniKur = "C1"; break;
                             case "C1": yeniKur = "C2"; break;
                             case "C2":
-                                bilgiMesaji("Kur Durumu", o.adSoyad + " zaten en yÃ¼ksek kurda (C2).");
+                                bilgiMesaji("Kur Durumu", o.adSoyad + " zaten en yüksek kurda (C2).");
                                 return;
                         }
                         
-                        // DB GÃ¼ncelleme
+
                         String sql = "UPDATE ogrenciler SET kur = ? WHERE id = ?";
                         try (Connection conn = connect();
                              PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -289,19 +289,19 @@ public class DilKursYonetimSistemi extends Application {
                         }
                         
                         o.kur = yeniKur;
-                        bilgiMesaji("Tebrikler", o.adSoyad + " kur atlamaya hak kazandÄ±!\nEski Kuru: " + eskiKur + " -> Yeni Kuru: " + o.kur);
+                        bilgiMesaji("Tebrikler", o.adSoyad + " kur atlamaya hak kazandı!\nEski Kuru: " + eskiKur + " -> Yeni Kuru: " + o.kur);
                         txtKurAtlaId.clear();
                     } else {
-                        hataMesaji("Yetersiz Not", "Kur atlamak iÃ§in not en az 85 olmalÄ±.");
+                        hataMesaji("Yetersiz Not", "Kur atlamak için not en az 85 olmalı.");
                     }
                 }
             }
             if (!bulundu) {
-                hataMesaji("Hata", "Ã–ÄŸrenci bulunamadÄ±.");
+                hataMesaji("Hata", "Öğrenci bulunamadı.");
             }
             tumOgrencileriListele();
         } catch (Exception e) {
-            hataMesaji("Hata", "GeÃ§erli bir ID girin.");
+            hataMesaji("Hata", "Geçerli bir ID girin.");
         }
     }
 
